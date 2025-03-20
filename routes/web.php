@@ -2,8 +2,12 @@
 
 // use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\MypageController;
+use App\Http\Controllers\MuseumController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ReviewFavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,5 +41,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [UsersController::class, 'update'])->name('users.update');
     Route::delete('/profile', [UsersController::class, 'destroy'])->name('users.destroy');
 });
+
+Route::get('/', [MuseumController::class, 'index'])->name('home');
+Route::get('/museum/{id}', [MuseumController::class, 'show'])->name('museum.show');
+Route::post('/museum/{museum}/review', [ReviewController::class, 'store'])->middleware('auth')->name('review.store');
+Route::post('/review/{review}/favorite', [ReviewFavoriteController::class, 'toggle'])->middleware('auth')->name('review.favorite.toggle');
 
 require __DIR__.'/auth.php';

@@ -6,7 +6,6 @@
         {{ Auth::user()->name }} のマイページ
     </div>
 
-    {{-- お気に入り & 行った展覧会 --}}
     <div class="w-full max-w-4xl grid grid-cols-2 gap-4 mt-6">
         {{-- お気に入り一覧 --}}
         <div class="border p-4">
@@ -30,7 +29,6 @@
         </div>
     </div>
 
-    {{-- 感想表示 --}}
     <div class="w-full max-w-4xl border p-4 mt-6">
         <h2 class="text-xl font-bold mb-2">感想</h2>
         <ul>
@@ -40,7 +38,19 @@
         </ul>
     </div>
 
-    {{-- ナビゲーションボタン --}}
+    <div class="border p-4 mt-4">
+        <h3 class="text-lg font-bold">お気に入りした感想</h3>
+        @foreach (Auth::user()->reviewFavorites as $favorite)
+            <div class="border-b py-2">
+                <a href="{{ route('museum.show', $favorite->review->museum->id) }}" class="text-blue-500">
+                    {{ $favorite->review->museum->name }}
+                </a>
+                <p>{{ $favorite->review->content }}</p>
+            </div>
+        @endforeach
+    </div>
+
+
     <div class="flex justify-center space-x-6 mt-6">
         <a href="{{ route('museum_top') }}" class="border px-4 py-2 rounded-full">トップページ</a>
         <a href="{{ route('logout') }}" class="border px-4 py-2 rounded-full">ログアウト</a>
