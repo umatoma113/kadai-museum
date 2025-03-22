@@ -1,28 +1,25 @@
 <?php
 
-// use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\MuseumController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ReviewFavoriteController;
+use App\Http\Controllers\SpecialExhibitionController;
+use App\Http\Controllers\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
-Route::get('/', function () {
+Route::get('/', [MuseumController::class, 'index'])->name('home');
+
+Route::get('/museum/top', function () {
     return view('museum_top');
-});
+})->name('museum_top');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/mypage', [MypageController::class, 'index'])->name('mypage');
@@ -33,18 +30,23 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('users', UsersController::class, ['only' => ['index', 'show']]);
-    //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    //Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    //Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('users', UsersController::class)->only(['index', 'show']);
+
     Route::get('/profile/edit', [UsersController::class, 'edit'])->name('users.edit');
     Route::patch('/profile', [UsersController::class, 'update'])->name('users.update');
     Route::delete('/profile', [UsersController::class, 'destroy'])->name('users.destroy');
 });
 
-Route::get('/', [MuseumController::class, 'index'])->name('home');
 Route::get('/museum/{id}', [MuseumController::class, 'show'])->name('museum.show');
-Route::post('/museum/{museum}/review', [ReviewController::class, 'store'])->middleware('auth')->name('review.store');
+Route::get('/special_exhibition/{special_exhibition}', [SpecialExhibitionController::class, 'show'])->name('special_exhibition.show');
+Route::post('/special_exhibition/{special_exhibition}/review', [ReviewController::class, 'store'])->middleware('auth')->name('review.store');
+Route::post('/special_exhibition/{special_exhibition}/toggle-visit', [SpecialExhibitionController::class, 'toggleVisit'])->middleware('auth')->name('special-exhibition.toggle-visit');
+
 Route::post('/review/{review}/favorite', [ReviewFavoriteController::class, 'toggle'])->middleware('auth')->name('review.favorite.toggle');
+
+Route::post('/museum/{museum}/favorite', [FavoriteController::class, 'store'])->middleware('auth')->name('museum.favorite');
+Route::delete('/museum/{museum}/favorite', [FavoriteController::class, 'destroy'])->middleware('auth')->name('museum.favorite.remove');
+
+Route::resource('exhibitions', SpecialExhibitionController::class)->only(['index', 'show', 'store']);
 
 require __DIR__.'/auth.php';

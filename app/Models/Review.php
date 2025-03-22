@@ -9,20 +9,20 @@ class Review extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'museum_id', 'content'];
+    protected $fillable = ['user_id', 'special_exhibition_id', 'content'];
 
-    public function user()
+    public function specialExhibition()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function museum()
-    {
-        return $this->belongsTo(Museum::class);
+        return $this->belongsTo(SpecialExhibition::class);
     }
 
     public function favorites()
     {
         return $this->hasMany(ReviewFavorite::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

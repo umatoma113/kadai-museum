@@ -14,11 +14,11 @@ return new class extends Migration
     Schema::create('museums', function (Blueprint $table) {
         $table->id();
         $table->string('name');
+        $table->string('official_website')->nullable();
         $table->string('location');
         $table->text('description')->nullable();
         $table->text('access')->nullable();
         $table->text('highlights')->nullable();
-        $table->string('special_exhibition')->nullable();
         $table->timestamps(); //
     });
     }

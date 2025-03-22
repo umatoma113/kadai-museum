@@ -11,14 +11,14 @@ class MuseumController extends Controller
     {
         $museums = Museum::all();
 
-        return view('museum_top', compact('museums'));
+        return view('museum_top', ['museums' => $museums]);
     }
 
-    public function show($id)
+    public function show(int $id)
     {
-        $museum = Museum::findOrFail($id);
+        $museum = Museum::with('specialExhibitions')->findOrFail($id);
 
-        return view('museums.show', compact('museum'));
+        return view('museums.show', ['museum' => $museum]);
     }
 }
 

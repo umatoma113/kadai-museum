@@ -17,7 +17,7 @@ class ReviewController extends Controller
 
         Review::create([
             'user_id' => Auth::id(),
-            'museum_id' => $museum_id,
+            'special_exhibition_id' => $special_exhibition_id,
             'content' => $request->content,
         ]);
 
