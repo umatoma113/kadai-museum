@@ -38,9 +38,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/museum/{id}', [MuseumController::class, 'show'])->name('museum.show');
-Route::get('/special_exhibition/{special_exhibition}', [SpecialExhibitionController::class, 'show'])->name('special_exhibition.show');
-Route::post('/special_exhibition/{special_exhibition}/review', [ReviewController::class, 'store'])->middleware('auth')->name('review.store');
-Route::post('/special_exhibition/{special_exhibition}/toggle-visit', [SpecialExhibitionController::class, 'toggleVisit'])->middleware('auth')->name('special-exhibition.toggle-visit');
+Route::get('/special-exhibition/{specialExhibition}', [SpecialExhibitionController::class, 'show'])->name('special_exhibition.show');
+Route::post('/special-exhibition/{specialExhibition}/review', [ReviewController::class, 'store'])->middleware('auth')->name('review.store');
+Route::post('/special-exhibition/{specialExhibition}/toggle-visit', [SpecialExhibitionController::class, 'toggleVisit'])->middleware('auth')->name('special_exhibition.toggle_visit');
 
 Route::post('/review/{review}/favorite', [ReviewFavoriteController::class, 'toggle'])->middleware('auth')->name('review.favorite.toggle');
 

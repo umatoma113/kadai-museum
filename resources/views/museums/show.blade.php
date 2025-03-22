@@ -37,16 +37,21 @@
                     <p class="text-sm text-gray-500">{{ $specialexhibition->date }}</p>
 
                     @auth
-                        <button class="visit-toggle text-xl"
-                            data-exhibition-id="{{ $specialexhibition->id }}"
-                            data-visited="{{ auth()->user()->visitedExhibitions->contains($specialexhibition->id) ? 'true' : 'false' }}">
-                            {{ auth()->user()->visitedExhibitions->contains($specialexhibition->id) ? '★' : '☆' }}
-                        </button>
+                        <form method="POST" action="{{ route('special_exhibition.toggle_visit', $specialexhibition->id) }}">
+                            @csrf
+                            <button type="submit" class="text-xl">
+                                @if(auth()->user()->visitedExhibitions->contains($specialexhibition->id))
+                                    ★
+                                @else
+                                    ☆
+                                @endif
+                            </button>
+                        </form>
                     @endauth
 
-                    <a href="{{ route('special_exhibition.show', $specialexhibition->id) }}">
-                        <button class="bg-gray-700 text-white px-4 py-2 rounded mt-2">詳しく</button>
-                    </a>
+                <a href="{{ route('special_exhibition.show', $specialexhibition->id) }}">
+                    <button class="bg-gray-700 text-white px-4 py-2 rounded mt-2">詳しく</button>
+                </a>
                 </div>
             @endforeach
         </div>
@@ -89,33 +94,4 @@
             </div>
         @endforeach
     </div>
-@endsection
-
-@section('scripts')
-    <script>
-        document.querySelectorAll('.visit-toggle').forEach(button => {
-            button.addEventListener('click', function() {
-                const exhibitionId = button.getAttribute('data-exhibition-id');
-                const isVisited = button.getAttribute('data-visited') === 'true';
-
-                fetch(`/special-exhibition/${exhibitionId}/toggle-visit`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ visited: !isVisited })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.visited) {
-                        button.textContent = '★';
-                    } else {
-                        button.textContent = '☆';
-                    }
-                    button.setAttribute('data-visited', data.visited ? 'true' : 'false');
-                });
-            });
-        });
-    </script>
 @endsection

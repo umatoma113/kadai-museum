@@ -14,11 +14,11 @@ class SpecialExhibitionController extends Controller
         return view('special_exhibitions.index', compact('exhibitions'));
     }
 
-    public function show($id)
+    public function show(SpecialExhibition $specialExhibition)
     {
-        $exhibition = SpecialExhibition::with('museum')->findOrFail($id);
+        $specialExhibition->load('museum');
 
-        return view('special_exhibition.show', compact('special_exhibition'));
+        return view('special_exhibition.show', compact('specialExhibition'));
     }
 
     public function create()
@@ -43,11 +43,8 @@ class SpecialExhibitionController extends Controller
 
     public function toggleVisit(SpecialExhibition $specialExhibition)
     {
-        if (!Auth::check()) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
         $user = Auth::user();
+
         $visited = $user->visitedExhibitions()->where('special_exhibition_id', $specialExhibition->id)->exists();
 
         if ($visited) {
@@ -56,18 +53,15 @@ class SpecialExhibitionController extends Controller
             $user->visitedExhibitions()->attach($specialExhibition->id);
         }
 
-        return response()->json([
-            'visited' => !$visited,
-        ]);
+        return back();
     }
 
-    public function edit($id)
+    public function edit(SpecialExhibition $specialExhibition)
     {
-        $exhibition = SpecialExhibition::findOrFail($id);
-        return view('special_exhibitions.edit', compact('exhibition'));
+        return view('special_exhibitions.edit', compact('specialExhibition'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, SpecialExhibition $specialExhibition)
     {
         $request->validate([
             'title' => 'required|string|max:255',
@@ -76,16 +70,14 @@ class SpecialExhibitionController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
-        $exhibition = SpecialExhibition::findOrFail($id);
-        $exhibition->update($request->all());
+        $specialExhibition->update($request->all());
 
-        return redirect()->route('special_exhibitions.show', $id)->with('success', '特別展情報が更新されました。');
+        return redirect()->route('special_exhibitions.show', $specialExhibition)->with('success', '特別展情報が更新されました。');
     }
 
-    public function destroy($id)
+    public function destroy(SpecialExhibition $specialExhibition)
     {
-        $exhibition = SpecialExhibition::findOrFail($id);
-        $exhibition->delete();
+        $specialExhibition->delete();
 
         return redirect()->route('special_exhibitions.index')->with('success', '特別展が削除されました。');
     }
