@@ -19,7 +19,7 @@ class Museum extends Model
 
     public function favorites()
     {
-        return $this->hasMany(Favorite::class);
+        return $this->belongsToMany(User::class, 'favorites', 'museum_id', 'user_id');
     }
 
     public function specialExhibitions()

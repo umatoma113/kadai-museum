@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ReviewFavoriteController extends Controller
 {
-    public function favorite($review_id) // メソッド名を favorite に変更
+    public function favorite($review_id)
     {
         $user_id = Auth::id();
         $favorite = ReviewFavorite::where('user_id', $user_id)->where('review_id', $review_id)->first();

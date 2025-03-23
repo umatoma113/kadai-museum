@@ -42,10 +42,10 @@ Route::get('/special-exhibition/{specialExhibition}', [SpecialExhibitionControll
 Route::post('/special-exhibition/{specialExhibition}/review', [ReviewController::class, 'store'])->middleware('auth')->name('review.store');
 Route::post('/special-exhibition/{specialExhibition}/toggle-visit', [SpecialExhibitionController::class, 'toggleVisit'])->middleware('auth')->name('special_exhibition.toggle_visit');
 
-Route::post('/review/{review}/favorite', [ReviewFavoriteController::class, 'toggle'])->middleware('auth')->name('review.favorite.toggle');
+Route::post('/review/{review}/favorite', [ReviewFavoriteController::class, 'favorite'])->middleware('auth')->name('review.favorite');
 
-Route::post('/museum/{museum}/favorite', [FavoriteController::class, 'store'])->middleware('auth')->name('museum.favorite');
-Route::delete('/museum/{museum}/favorite', [FavoriteController::class, 'destroy'])->middleware('auth')->name('museum.favorite.remove');
+Route::post('/museum/{museum}/favorite', [FavoriteController::class, 'store'])->name('museum.favorite.store')->middleware('auth');
+Route::delete('/museum/{museum}/favorite', [FavoriteController::class, 'destroy'])->name('museum.favorite.destroy')->middleware('auth');
 
 Route::resource('exhibitions', SpecialExhibitionController::class)->only(['index', 'show', 'store']);
 

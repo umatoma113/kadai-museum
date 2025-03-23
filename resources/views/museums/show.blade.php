@@ -4,6 +4,25 @@
     <div class="border p-4">
         <h1 class="text-center text-lg font-bold">博物館</h1>
         <h2 class="text-center text-xl font-bold">{{ $museum->name }}</h2>
+
+        @auth
+            @if(auth()->user()->favorites->contains($museum->id))
+                <form method="POST" action="{{ route('museum.favorite.destroy', $museum->id) }}" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 text-black px-4 py-2 rounded">
+                        お気に入り解除
+                    </button>
+                </form>
+            @else
+                <form method="POST" action="{{ route('museum.favorite.store', $museum->id) }}" class="inline">
+                    @csrf
+                    <button type="submit" class="bg-sky-300 text-black px-4 py-2 rounded">
+                        お気に入り
+                    </button>
+                </form>
+            @endif
+        @endauth
     </div>
 
     <div class="border p-4 mt-4 text-center">
@@ -57,41 +76,5 @@
         </div>
     </div>
 
-    <div class="border p-4 mt-4">
-        <h3 class="text-lg font-bold">感想を投稿</h3>
-        @auth
-            <form action="{{ route('review.store', $museum->id) }}" method="POST">
-                @csrf
-                <textarea name="content" class="w-full border p-2 mt-2" rows="3"></textarea>
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">投稿</button>
-            </form>
-        @else
-            <p>ログインすると感想を投稿できます。</p>
-        @endauth
-    </div>
 
-    <div class="border p-4 mt-4">
-        <h3 class="text-lg font-bold">感想一覧</h3>
-        @foreach ($museum->reviews as $review)
-            <div class="border-b py-2">
-                <p>{{ $review->content }}</p>
-
-                {{-- お気に入り機能 --}}
-                @auth
-                    <form action="{{ route('review.favorite', $review->id) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="text-blue-500">
-                            @if ($review->favorites->where('user_id', Auth::id())->count())
-                                ♡
-                            @else
-                                ♥
-                            @endif
-                        </button>
-                    </form>
-                @else
-                    <p class="text-sm text-gray-500">ログインするとお気に入り登録できます。</p>
-                @endauth
-            </div>
-        @endforeach
-    </div>
 @endsection

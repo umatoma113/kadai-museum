@@ -15,7 +15,11 @@
             @else
                 <ul>
                     @foreach ($favorites as $favorite)
-                        <li>{{ $favorite->museum->name }}</li>
+                        <li>
+                            <a href="{{ route('museum.show', $favorite->museum->id) }}" class="text-sky-300">
+                                {{ $favorite->museum->name }}
+                            </a>
+                        </li>
                     @endforeach
                 </ul>
             @endif

@@ -52,4 +52,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
     return $this->hasMany(ReviewFavorite::class);
     }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Museum::class, 'favorites', 'user_id', 'museum_id');
+    }
 }

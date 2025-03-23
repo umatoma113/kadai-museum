@@ -11,6 +11,20 @@
     @foreach ($specialExhibition->reviews as $review)
         <div>
             <p>{{ $review->user->name }}: {{ $review->content }}</p>
+            @auth
+                <form action="{{ route('review.favorite', $review->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="text-blue-500">
+                        @if ($review->favorites->where('user_id', Auth::id())->count())
+                            ♡
+                        @else
+                            ♥
+                        @endif
+                    </button>
+                </form>
+            @else
+                <p class="text-sm text-gray-500">ログインするとお気に入り登録できます。</p>
+            @endauth
         </div>
     @endforeach
 

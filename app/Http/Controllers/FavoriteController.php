@@ -13,10 +13,13 @@ class FavoriteController extends Controller
     {
         $user = Auth::user();
 
-        Favorite::create([
-            'user_id' => $user->id,
-            'museum_id' => $museum->id
-        ]);
+        if ($user->favoriteMuseums === null) {
+            $user->load('favorites');
+        }
+
+        if (!$user->favorites->contains($museum->id)) {
+            Favorite::create(['user_id' => $user->id, 'museum_id' => $museum->id]);
+        }
 
         return redirect()->route('museum.show', $museum->id);
     }

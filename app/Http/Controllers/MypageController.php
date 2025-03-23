@@ -15,7 +15,7 @@ class MypageController extends Controller
         $user = Auth::user();
         $favorites = Favorite::where('user_id', $user->id)->get();
         $visitedSpecialExhibitions = $user->specialExhibitions;
-        $favoriteReviews = Review::whereIn('museum_id', $favorites->pluck('museum_id'))->get();
+        $favoriteReviews = Review::whereIn('special_exhibition_id', $favorites->pluck('museum_id'))->get();
 
         return view('mypage', compact('favorites', 'visitedSpecialExhibitions', 'favoriteReviews'));
     }
