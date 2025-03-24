@@ -26,9 +26,9 @@
     </div>
 
     <div class="border p-4 mt-4 text-center">
-        <h3 class="text-lg font-bold">特別展・企画展</h3>
-        <a href="{{ $museum->official_website }}" target="_blank">
-            <button class="bg-gray-700 text-white px-4 py-2 rounded mt-2">公式ページ</button>
+        <h3 class="text-lg font-bold mb-4">特別展・企画展</h3>
+        <a href="{{ $museum->official_website }}" target="_blank" class="bg-gray-700 text-white px-4 py-2 rounded inline-block text-center">
+            公式ページ
         </a>
     </div>
 

@@ -9,7 +9,7 @@ class SpecialExhibition extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'date', 'official_website', 'museum_id'];
+    protected $fillable = ['title', 'start_date', 'end_date', 'official_website', 'museum_id'];
 
     public function museum()
     {
@@ -18,11 +18,8 @@ class SpecialExhibition extends Model
 
     public function reviews()
     {
-        return $this->hasMany(Review::class);
-    }
-
-    public function users()
-    {
-    return $this->belongsToMany(User::class, 'user_special_exhibition');
+        return $this->belongsToMany(User::class, 'reviews')
+            ->withPivot('content')
+            ->withTimestamps();
     }
 }

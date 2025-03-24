@@ -17,9 +17,7 @@ use App\Http\Controllers\FavoriteController;
 
 Route::get('/', [MuseumController::class, 'index'])->name('home');
 
-Route::get('/museum/top', function () {
-    return view('museum_top');
-})->name('museum_top');
+Route::get('/museum/top', [MuseumController::class, 'index'])->name('museum_top');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/mypage', [MypageController::class, 'index'])->name('mypage');

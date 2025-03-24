@@ -16,6 +16,12 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+
+            colors: {
+                sky: {
+                    300: '#7dd3fc',
+                },
+            }
         },
     },
 

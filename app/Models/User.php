@@ -45,7 +45,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function specialExhibitions()
     {
-        return $this->belongsToMany(SpecialExhibition::class, 'user_special_exhibition');
+        return $this->belongsToMany(SpecialExhibition::class, 'reviews')
+            ->withPivot('content')
+            ->withTimestamps();
     }
 
     public function reviewFavorites()

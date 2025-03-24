@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('museum_id')->constrained()->onDelete('cascade');
             $table->string('title');
-            $table->date('date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }
