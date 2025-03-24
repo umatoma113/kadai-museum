@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('museum_id')->constrained()->onDelete('cascade');
             $table->string('title');
+            $table->string('special_exhibition_website')->nullable();
             $table->date('start_date');
             $table->date('end_date');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
