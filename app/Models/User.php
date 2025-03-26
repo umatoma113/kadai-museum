@@ -43,16 +43,21 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    public function specialExhibitions()
+    public function specialExhibitions()  //special_exhibitionsではなくreviwes?
     {
         return $this->belongsToMany(SpecialExhibition::class, 'reviews')
             ->withPivot('content')
             ->withTimestamps();
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);  //belongsToMany?
+    }
+
     public function reviewFavorites()
     {
-    return $this->hasMany(ReviewFavorite::class);
+        return $this->belongsToMany(Review::class, 'review_favorites');
     }
 
     public function favorites()

@@ -11,6 +11,11 @@ class Review extends Model
 
     protected $fillable = ['user_id', 'special_exhibition_id', 'content'];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function specialExhibition()
     {
         return $this->belongsTo(SpecialExhibition::class);
@@ -21,8 +26,8 @@ class Review extends Model
         return $this->hasMany(ReviewFavorite::class);
     }
 
-    public function user()
+    public function reviewFavorites()
     {
-        return $this->belongsTo(User::class);
+    return $this->hasMany(ReviewFavorite::class);
     }
 }

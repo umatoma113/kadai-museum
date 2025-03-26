@@ -50,31 +50,16 @@
     <div class="border p-4 mt-4">
         <h3 class="text-lg font-bold">企画展・特別展</h3>
         <div class="flex flex-wrap gap-4">
-            @foreach ($museum->specialExhibitions as $specialexhibition)
+            @foreach ($museum->specialExhibitions as $specialExhibition)
                 <div class="border p-4 w-60 text-center">
-                    <h4 class="font-bold">{{ $specialexhibition->title }}</h4>
-                    <p class="text-sm text-gray-500">{{ $specialexhibition->date }}</p>
+                    <h4 class="font-bold">{{ $specialExhibition->title }}</h4>
+                    <p class="text-sm text-gray-500">{{ $specialExhibition->start_date }} - {{ $specialExhibition->end_date }}</p>
 
-                    @auth
-                        <form method="POST" action="{{ route('special_exhibition.toggle_visit', $specialexhibition->id) }}">
-                            @csrf
-                            <button type="submit" class="text-xl">
-                                @if(auth()->user()->visitedExhibitions->contains($specialexhibition->id))
-                                    ★
-                                @else
-                                    ☆
-                                @endif
-                            </button>
-                        </form>
-                    @endauth
-
-                <a href="{{ route('special_exhibition.show', $specialexhibition->id) }}">
+                    <a href="{{ route('special_exhibition.show', ['museum' => $museum->id, 'specialExhibition' => $specialExhibition->id]) }}">
                     <button class="bg-gray-700 text-white px-4 py-2 rounded mt-2">詳しく</button>
                 </a>
                 </div>
             @endforeach
         </div>
     </div>
-
-
 @endsection

@@ -5,20 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SpecialExhibition;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Museum;
 
 class SpecialExhibitionController extends Controller
 {
     public function index()
     {
         $exhibitions = SpecialExhibition::all();
-        return view('special_exhibitions.index', compact('exhibitions'));
+        return view('special_exhibition.index', compact('exhibitions'));
     }
 
-    public function show(SpecialExhibition $specialExhibition)
+    public function show(Museum $museum, SpecialExhibition $specialExhibition)
     {
         $specialExhibition->load('museum');
 
-        return view('special_exhibition.show', compact('specialExhibition'));
+        return view('special_exhibition.show', compact('museum', 'specialExhibition'));
     }
 
     public function create()
@@ -41,16 +42,16 @@ class SpecialExhibitionController extends Controller
         return redirect()->route('special_exhibitions.index')->with('success', '特別展が追加されました。');
     }
 
-    public function toggleVisit(SpecialExhibition $specialExhibition)
+    public function visited(SpecialExhibition $specialExhibition)
     {
         $user = Auth::user();
 
-        $visited = $user->visitedExhibitions()->where('special_exhibition_id', $specialExhibition->id)->exists();
+        $visited = $user->specialExhibitions()->where('special_exhibition_id', $specialExhibition->id)->exists();
 
         if ($visited) {
-            $user->visitedExhibitions()->detach($specialExhibition->id);
+            $user->specialExhibitions()->detach($specialExhibition->id);
         } else {
-            $user->visitedExhibitions()->attach($specialExhibition->id);
+            $user->specialExhibitions()->attach($specialExhibition->id);
         }
 
         return back();

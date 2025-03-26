@@ -25,30 +25,34 @@
             @endif
         </div>
 
-        {{-- 行った展覧会 --}}
+        {{-- 行った展覧会
         <div class="border p-4">
             <h2 class="text-xl font-bold mb-2">行った展覧会</h2>
-            <ul>
-                @foreach ($visitedSpecialExhibitions as $exhibition)
-                    <li>
-                        {{ $exhibition->title }} -
-                        @foreach ($exhibition->reviews as $review)
-                            {{ $review->content }}
-                        @endforeach
-                    </li>
-                @endforeach
-            </ul>
-        </div>
+            @if ($visitedSpecialExhibitions->isEmpty())
+                <p>訪問した特別展はありません。</p>
+            @else
+                <ul>
+                    @foreach ($visitedSpecialExhibitions as $exhibition)
+                        <li class="mb-4">
+                            <a href="{{ route('special_exhibition.show', ['museum' => $exhibition->museum->id, 'specialExhibition' => $exhibition->id]) }}" class="text-sky-300">
+                                {{ $exhibition->title }}
+                            </a>
+                            <p class="text-gray-600">場所: {{ $exhibition->museum->name }}</p>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+        </div> --}}
     </div>
 
     <div class="border p-4 mt-4 mx-auto w-full max-w-4xl">
         <h3 class="text-lg font-bold">お気に入りした感想</h3>
-        @forelse (Auth::user()->reviewFavorites as $favorite)
+        @forelse ($reviewFavorites as $reviewFavorite)
             <div class="border-b py-2">
-                <a href="{{ route('museum.show', $favorite->review->specialExhibition->museum->id) }}" class="text-blue-500">
-                    {{ $favorite->review->specialExhibition->museum->name }}
+                <a href="{{ route('special_exhibition.show', ['museum' => $reviewFavorite->review->specialExhibition->museum->id, 'specialExhibition' => $reviewFavorite->review->specialExhibition->id]) }}" class="text-blue-500">
+                    {{ $reviewFavorite->review->specialExhibition->museum->name }} - {{ $reviewFavorite->review->specialExhibition->title }}
                 </a>
-                <p>{{ $favorite->review->content }}</p>
+                <p>{{ $reviewFavorite->review->content }}</p>
             </div>
         @empty
             <p>お気に入りにした感想はありません。</p>
