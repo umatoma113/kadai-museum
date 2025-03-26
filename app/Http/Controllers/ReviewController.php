@@ -22,7 +22,7 @@ class ReviewController extends Controller
             'content' => $request->content,
         ]);
 
-        return redirect()->route('museum.show', $museum->id);
+        return back();
     }
 
     public function myReviews()

@@ -18,8 +18,6 @@ class SpecialExhibition extends Model
 
     public function reviews()
     {
-        return $this->belongsToMany(User::class, 'reviews')
-            ->withPivot('content')
-            ->withTimestamps();
+        return $this->hasMany(Review::class);
     }
 }

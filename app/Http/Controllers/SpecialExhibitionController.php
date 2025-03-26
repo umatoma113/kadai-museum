@@ -17,9 +17,13 @@ class SpecialExhibitionController extends Controller
 
     public function show(Museum $museum, SpecialExhibition $specialExhibition)
     {
-        $specialExhibition->load('museum');
+        $specialExhibition->load('museum', 'reviews');
 
-        return view('special_exhibition.show', compact('museum', 'specialExhibition'));
+        $favoritedReviewIds = auth()->check()
+        ? auth()->user()->reviewFavorites()->pluck('review_id')->toArray()
+        : [];
+
+        return view('special_exhibition.show', compact('museum', 'specialExhibition', 'favoritedReviewIds'));
     }
 
     public function create()

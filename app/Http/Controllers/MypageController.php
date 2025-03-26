@@ -20,6 +20,10 @@ class MypageController extends Controller
                 ->with('review.specialExhibition')
                 ->get();
 
-        return view('mypage', compact('favorites', 'reviewFavorites'));
+        $reviews = Review::where('user_id', $user->id)
+                ->with('specialExhibition.museum')
+                ->get();
+
+        return view('mypage', compact('favorites', 'reviewFavorites', 'reviews'));
     }
 }

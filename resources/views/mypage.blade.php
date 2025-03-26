@@ -25,6 +25,25 @@
             @endif
         </div>
 
+        <div class="border p-4 mt-4 mx-auto w-full max-w-4xl">
+            <h3 class="text-lg font-bold">投稿した感想</h3>
+            @forelse ($reviews as $review)
+                <div class="border-b py-2">
+                    <a href="{{ route('special_exhibition.show', ['museum' => $review->specialExhibition->museum->id, 'specialExhibition' => $review->specialExhibition->id]) }}" class="text-blue-500">
+                        {{ $review->specialExhibition->museum->name }} - {{ $review->specialExhibition->title }}
+                    </a>
+                    <p class="text-gray-600">{{ $review->content }}</p>
+                    <form action="{{ route('review.destroy', $review->id) }}" method="POST" class="mt-2">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-500 hover:text-red-700">削除</button>
+                    </form>
+                </div>
+            @empty
+                <p>まだ感想を投稿していません。</p>
+            @endforelse
+        </div>
+
         {{-- 行った展覧会
         <div class="border p-4">
             <h2 class="text-xl font-bold mb-2">行った展覧会</h2>
