@@ -21,10 +21,10 @@ class Review extends Model
         return $this->belongsTo(SpecialExhibition::class);
     }
 
-    public function favorites()
-    {
-        return $this->hasMany(ReviewFavorite::class);
-    }
+    //public function favorites()
+    //{
+    //    return $this->hasMany(ReviewFavorite::class);
+    //}
 
     public function reviewFavorites()
     {

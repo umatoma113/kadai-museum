@@ -50,7 +50,7 @@
     <div class="border p-4 mt-4">
         <h3 class="text-lg font-bold">企画展・特別展</h3>
         <div class="flex flex-wrap gap-4">
-            @foreach ($museum->specialExhibitions as $specialExhibition)
+            @foreach ($museum->specialExhibitions()->orderBy('start_date', 'desc')->get() as $specialExhibition)
                 <div class="border p-4 w-60 text-center">
                     <h4 class="font-bold">{{ $specialExhibition->title }}</h4>
                     <p class="text-sm text-gray-500">{{ $specialExhibition->start_date }} - {{ $specialExhibition->end_date }}</p>

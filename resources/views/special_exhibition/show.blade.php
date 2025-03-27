@@ -15,6 +15,14 @@
         </p>
 
         <div class="border border-gray-300 rounded-lg p-4 shadow-md mt-6">
+            <form method="POST" action="{{ route('reviews.store', ['museum' => $museum->id, 'specialExhibition' => $specialExhibition->id]) }}" class="mt-4">
+                @csrf
+                <textarea name="content" placeholder="感想を投稿" class="w-full p-2 border border-gray-300 rounded"></textarea>
+                <button type="submit" class="bg-gray-700 text-white px-4 py-2 rounded mt-2">投稿</button>
+            </form>
+        </div>
+
+        <div class="border border-gray-300 rounded-lg p-4 shadow-md mt-6 overflow-y-auto" style="max-height: 500px;">
             <h3 class="text-lg font-bold text-center">感想</h3>
             @foreach ($specialExhibition->reviews as $review)
                 <div class="border-b border-gray-300 p-2 mb-2">
@@ -39,12 +47,6 @@
                     @endauth
             @endforeach
         </div>
-
-        <form method="POST" action="{{ route('reviews.store', ['museum' => $museum->id, 'specialExhibition' => $specialExhibition->id]) }}" class="mt-4">
-            @csrf
-            <textarea name="content" placeholder="感想を投稿" class="w-full p-2 border border-gray-300 rounded"></textarea>
-            <button type="submit" class="bg-gray-700 text-white px-4 py-2 rounded mt-2">投稿</button>
-        </form>
     </div>
 </div>
 @endsection
