@@ -6,7 +6,7 @@
         {{ Auth::user()->name }} のマイページ
     </div>
 
-    <div class="w-full max-w-4xl mx-auto grid grid-cols-2 gap-4 mt-6">
+    <div class="w-full max-w-4xl mx-auto grid grid-cols-2 gap-4 mt-6 h-96 overflow-y-auto">
         {{-- お気に入り一覧 --}}
         <div class="border p-4">
             <h2 class="text-xl font-bold mb-2">お気に入り</h2>
@@ -25,7 +25,7 @@
             @endif
         </div>
 
-        <div class="border p-4 mt-4 mx-auto w-full max-w-4xl">
+        <div class="border p-4 mt-4 mx-auto w-full max-w-4xl h-96 overflow-y-auto">
             <h3 class="text-lg font-bold">投稿した感想</h3>
             @forelse ($reviews as $review)
                 <div class="border-b py-2">
@@ -43,28 +43,9 @@
                 <p>まだ感想を投稿していません。</p>
             @endforelse
         </div>
-
-        {{-- 行った展覧会
-        <div class="border p-4">
-            <h2 class="text-xl font-bold mb-2">行った展覧会</h2>
-            @if ($visitedSpecialExhibitions->isEmpty())
-                <p>訪問した特別展はありません。</p>
-            @else
-                <ul>
-                    @foreach ($visitedSpecialExhibitions as $exhibition)
-                        <li class="mb-4">
-                            <a href="{{ route('special_exhibition.show', ['museum' => $exhibition->museum->id, 'specialExhibition' => $exhibition->id]) }}" class="text-sky-300">
-                                {{ $exhibition->title }}
-                            </a>
-                            <p class="text-gray-600">場所: {{ $exhibition->museum->name }}</p>
-                        </li>
-                    @endforeach
-                </ul>
-            @endif
-        </div> --}}
     </div>
 
-    <div class="border p-4 mt-4 mx-auto w-full max-w-4xl">
+    <div class="border p-4 mt-4 mx-auto w-full max-w-4xl h-96 overflow-y-auto">
         <h3 class="text-lg font-bold">お気に入りした感想</h3>
         @forelse ($reviewFavorites as $reviewFavorite)
             <div class="border-b py-2">
