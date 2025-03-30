@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for museum on 2025-03-29T11:36:30+09:00
+# fly.toml app configuration file generated for museum on 2025-03-30T09:47:48+09:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -10,7 +10,7 @@ console_command = 'php /var/www/html/artisan tinker'
 [build]
   [build.args]
     NODE_VERSION = '18'
-    PHP_VERSION = '8.1'
+    PHP_VERSION = '8.3'
 
 [env]
   APP_ENV = 'production'
@@ -20,12 +20,17 @@ console_command = 'php /var/www/html/artisan tinker'
   SESSION_DRIVER = 'cookie'
   SESSION_SECURE_COOKIE = 'true'
 
-  APP_NAME = 'Laravel
+  APP_URL = 'https://museum.fly.dev'
+  APP_NAME = 'Laravel'
+  APP_DEBUG = false
+  DB_CONNECTION = 'pgsql'
+  DATABASE_URL = 'postgresql://postgres.unthqgofdafsybdgyfwd:yg3QyQg6i8m1jmxm@aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres'
+
 
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = 'stop'
+  auto_stop_machines = true
   auto_start_machines = true
   min_machines_running = 0
   processes = ['app']

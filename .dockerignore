@@ -10,7 +10,7 @@ storage/logs/*
 .rr.yml
 rr
 frankenphp
-vendor
+
 
 # 2. Ignore common files/directories we don't need
 fly.toml
