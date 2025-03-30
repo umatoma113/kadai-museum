@@ -13,12 +13,8 @@ class FavoriteController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->favoriteMuseums === null) {
-            $user->load('favorites');
-        }
-
-        if (!$user->favorites->contains($museum->id)) {
-            Favorite::create(['user_id' => $user->id, 'museum_id' => $museum->id]);
+        if (!$user->favorites()->where('museum_id', $museum->id)->exists()) {
+            $user->favorites()->attach($museum->id);
         }
 
         return redirect()->route('museum.show', $museum->id);
@@ -28,7 +24,7 @@ class FavoriteController extends Controller
     {
         $user = Auth::user();
 
-        Favorite::where('user_id', $user->id)->where('museum_id', $museum->id)->delete();
+        $user->favorites()->detach($museum->id);
 
         return redirect()->route('museum.show', $museum->id);
     }

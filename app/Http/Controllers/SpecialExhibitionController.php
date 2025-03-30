@@ -23,6 +23,9 @@ class SpecialExhibitionController extends Controller
         ? auth()->user()->reviewFavorites()->pluck('review_id')->toArray()
         : [];
 
+        //$favoritedReviewIds = auth()->user()?->reviewFavorites()->pluck('review_id')->toArray()
+        //: [];
+
         return view('special_exhibition.show', compact('museum', 'specialExhibition', 'favoritedReviewIds'));
     }
 
