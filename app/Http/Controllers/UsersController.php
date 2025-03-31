@@ -12,17 +12,15 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::orderBy('id', 'desc')->paginate(10);
-        return view('users.index', [
-            'users' => $users
-        ]);
+
+        return view('users.index', compact('users'));
     }
 
     public function show(string $id)
     {
         $user = User::findOrFail($id);
-        return view('users.show', [
-            'user' => $user,
-        ]);
+
+        return view('users.show', compact('user'));
     }
 
     public function edit()

@@ -13,9 +13,10 @@ class MypageController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $user = Auth::user();//->laod(favorites);
 
         $favorites = Favorite::where('user_id', $user->id)->get();
+
         $visitedSpecialExhibitions = SpecialExhibition::whereIn('id', auth()->user()->visitedSpecialExhibitions ?? [])->get();
         $reviewFavorites = ReviewFavorite::where('user_id', $user->id)
                 ->with('review.specialExhibition')

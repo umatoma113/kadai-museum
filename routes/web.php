@@ -14,54 +14,50 @@ use App\Http\Controllers\FavoriteController;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
+| 美術館関連のページ
 */
 
 Route::get('/', [MuseumController::class, 'index'])->name('home');
-
 Route::get('/museum/top', [MuseumController::class, 'index'])->name('museum_top');
+Route::get('/museum/{id}', [MuseumController::class, 'show'])->name('museum.show');
+Route::get('/museum/{museum}/special-exhibition/{specialExhibition}', [SpecialExhibitionController::class, 'show'])->name('special_exhibition.show');
 
+/*
+|--------------------------------------------------------------------------
+| ユーザー関連・マイページ・レビュー
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth'])->group(function () {
+    // マイページ関連
     Route::get('/mypage', [MypageController::class, 'index'])->name('mypage');
-});
-
-Route::middleware(['auth'])->group(function () {
     Route::get('/mypage/reviews', [ReviewController::class, 'myReviews'])->name('myreviews');
-    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('review.destroy');
-});
+    Route::get('/mypage/favorites', [ReviewFavoriteController::class, 'myFavorites'])->name('mypage.favorites');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
+    // ユーザー管理
     Route::resource('users', UsersController::class)->only(['index', 'show']);
-
     Route::get('/profile/edit', [UsersController::class, 'edit'])->name('users.edit');
     Route::patch('/profile', [UsersController::class, 'update'])->name('users.update');
     Route::delete('/profile', [UsersController::class, 'destroy'])->name('users.destroy');
-});
 
-Route::get('/museum/{id}', [MuseumController::class, 'show'])->name('museum.show');
-Route::get('/museum/{museum}/special-exhibition/{specialExhibition}', [SpecialExhibitionController::class, 'show'])->name('special_exhibition.show');
-Route::post('/museum/{museum}/special-exhibition/{specialExhibition}/reviews',  [ReviewController::class, 'store'])->middleware('auth')->name('reviews.store');
+    // レビュー関連
+    Route::post('/museum/{museum}/special-exhibition/{specialExhibition}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('review.destroy');
 
-//Route::middleware('auth')->group(function () {
-    //Route::post('/special-exhibition/{specialExhibition}/visited', [VisitedExhibitionController::class, 'store'])->name('visited_exhibition.store');
-    //Route::delete('/special-exhibition/{specialExhibition}/visited', [VisitedExhibitionController::class, 'destroy'])->name('visited_exhibition.destroy');
-    //Route::get('/mypage/visited-exhibitions', [VisitedExhibitionController::class, 'index'])->name('visited_exhibition.index');
-//});
-
-Route::post('/reviews/{museum}/{specialExhibition}', [ReviewController::class, 'store'])->name('reviews.store');
-
-Route::middleware(['auth'])->group(function () {
+    // お気に入り機能（レビュー）
     Route::post('/review/{review}/favorite/add', [ReviewFavoriteController::class, 'add'])->name('review.favorite.add');
     Route::delete('/review/{review}/favorite/remove', [ReviewFavoriteController::class, 'remove'])->name('review.favorite.remove');
-    Route::get('/mypage/favorites', [ReviewFavoriteController::class, 'myFavorites'])->name('mypage.favorites');
+
+    // お気に入り機能（美術館）
+    Route::post('/museum/{museum}/favorite', [FavoriteController::class, 'store'])->name('museum.favorite.store');
+    Route::delete('/museum/{museum}/favorite', [FavoriteController::class, 'destroy'])->name('museum.favorite.destroy');
 });
 
-Route::post('/museum/{museum}/favorite', [FavoriteController::class, 'store'])->name('museum.favorite.store')->middleware('auth');
-Route::delete('/museum/{museum}/favorite', [FavoriteController::class, 'destroy'])->name('museum.favorite.destroy')->middleware('auth');
 
+/*
+|--------------------------------------------------------------------------
+| 展覧会関連
+|--------------------------------------------------------------------------
+*/
 Route::resource('exhibitions', SpecialExhibitionController::class)->only(['index', 'show', 'store']);
 
 require __DIR__.'/auth.php';
