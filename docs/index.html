@@ -3,14 +3,127 @@
 <head>
   <meta charset="UTF-8" />
   <title>Museum ポートフォリオ紹介</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { font-family: sans-serif; padding: 2rem; }
-    h1 { color: #333; }
+    body {
+      font-family: sans-serif;
+      line-height: 1.6;
+      background-color: #fefefe;
+      color: #333;
+      margin: 0;
+      padding: 2rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    h1, h2, h3 {
+      color: #1a1a1a;
+    }
+    a {
+      color: #007acc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    code {
+      background-color: #f4f4f4;
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    .section {
+      margin-top: 2rem;
+    }
+    .diagram, .er {
+      width: 100%;
+      max-width: 800px;
+      margin-top: 1rem;
+    }
+    table {
+      border-collapse: collapse;
+      margin-top: 1rem;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.6em;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
   </style>
 </head>
 <body>
-  <h1>Museum アプリ ポートフォリオ</h1>
-  <p>本番環境はこちら → <a href="https://museum.fly.dev/" target="_blank">https://museum.fly.dev/</a></p>
-  <p>GitHub リポジトリはこちら → <a href="https://github.com/umatoma113/kadai-museum" target="_blank">https://github.com/umatoma113/kadai-museum</a></p>
+  <h1>Museum - 美術館・展覧会レビュー共有サービス</h1>
+
+  <p><strong>Museum</strong> は、美術館・展覧会に関する情報を管理・共有できるレビュー型Webアプリケーションです。</p>
+  <p>全国の美術館に対する訪問履歴や感想を記録し、他のユーザーと共有できます。</p>
+
+  <div class="section">
+    <h2>🔧 主な機能</h2>
+    <ul>
+      <li>美術館の一覧表示と、施設ごとの特別展（企画展）の表示</li>
+      <li>ユーザー登録・ログイン機能（Breeze 使用）</li>
+      <li>展覧会に対する「行った」記録、および感想投稿</li>
+      <li>展覧会・感想へのお気に入り登録機能</li>
+      <li>マイページでの訪問履歴・お気に入り・投稿管理</li>
+      <li>他ユーザーの感想の閲覧と共感</li>
+      <li>本人のみ投稿編集可能な制御</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>🧭 概要設計（アーキテクチャ図）</h2>
+    <pre><code>graph TD
+  User[ユーザー]
+  Browser[ブラウザ（Bladeテンプレート）]
+  Laravel[Laravel（コントローラ・ルーティング）]
+  DB[(MySQL)]
+  Auth[Breeze認証]
+
+  User --> Browser
+  Browser --> Laravel
+  Laravel --> DB
+  Laravel --> Auth
+    </code></pre>
+    <p>※ Mermaid記法対応サイトやREADMEでの表示用です。</p>
+  </div>
+
+  <div class="section">
+    <h2>🗺️ サイトマップ（画面遷移図）</h2>
+    <img src="./diagram.png" alt="画面遷移図" class="diagram" />
+  </div>
+
+  <div class="section">
+    <h2>🧩 データベース構成（ER図）</h2>
+    <img src="./er.png" alt="ER図" class="er" />
+  </div>
+
+  <div class="section">
+    <h2>🚀 公開URLまとめ</h2>
+    <ul>
+      <li>GitHub Pages 紹介ページ：<a href="https://umatoma113.github.io/museum/" target="_blank">https://umatoma113.github.io/museum/</a></li>
+      <li>本番アプリ（Laravel + Fly.io）：<a href="https://museum.fly.dev/" target="_blank">https://museum.fly.dev/</a></li>
+      <li>ソースコード（GitHub）：<a href="https://github.com/umatoma113/kadai-museum" target="_blank">https://github.com/umatoma113/kadai-museum</a></li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>💻 使用技術スタック</h2>
+    <table>
+      <thead>
+        <tr><th>分類</th><th>技術</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>フレームワーク</td><td>PHP 8.x / Laravel 10.x</td></tr>
+        <tr><td>フロント</td><td>Blade（HTML / CSS / JavaScript）</td></tr>
+        <tr><td>認証</td><td>Laravel Breeze</td></tr>
+        <tr><td>データベース</td><td>MySQL（ローカル or Fly.io）</td></tr>
+        <tr><td>デプロイ</td><td>Fly.io（無料プラン使用）</td></tr>
+      </tbody>
+    </table>
+  </div>
 </body>
 </html>
