@@ -75,55 +75,12 @@
   </div>
 
   <div class="section">
-    <h2>🧭 概要設計（アーキテクチャ図）</h2>
-    <pre><code>graph TD
-  User[ユーザー]
-  Browser[ブラウザ（Bladeテンプレート）]
-  Laravel[Laravel（コントローラ・ルーティング）]
-  DB[(MySQL)]
-  Auth[Breeze認証]
-
-  User --> Browser
-  Browser --> Laravel
-  Laravel --> DB
-  Laravel --> Auth
-    </code></pre>
-    <p>※ Mermaid記法対応サイトやREADMEでの表示用です。</p>
-  </div>
-
-  <div class="section">
-    <h2>🗺️ サイトマップ（画面遷移図）</h2>
-    <img src="./diagram.png" alt="画面遷移図" class="diagram" />
-  </div>
-
-  <div class="section">
-    <h2>🧩 データベース構成（ER図）</h2>
-    <img src="./er.png" alt="ER図" class="er" />
-  </div>
-
-  <div class="section">
     <h2>🚀 公開URLまとめ</h2>
     <ul>
       <li>GitHub Pages 紹介ページ：<a href="https://umatoma113.github.io/museum/" target="_blank">https://umatoma113.github.io/museum/</a></li>
       <li>本番アプリ（Laravel + Fly.io）：<a href="https://museum.fly.dev/" target="_blank">https://museum.fly.dev/</a></li>
       <li>ソースコード（GitHub）：<a href="https://github.com/umatoma113/kadai-museum" target="_blank">https://github.com/umatoma113/kadai-museum</a></li>
     </ul>
-  </div>
-
-  <div class="section">
-    <h2>💻 使用技術スタック</h2>
-    <table>
-      <thead>
-        <tr><th>分類</th><th>技術</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>フレームワーク</td><td>PHP 8.x / Laravel 10.x</td></tr>
-        <tr><td>フロント</td><td>Blade（HTML / CSS / JavaScript）</td></tr>
-        <tr><td>認証</td><td>Laravel Breeze</td></tr>
-        <tr><td>データベース</td><td>MySQL（ローカル or Fly.io）</td></tr>
-        <tr><td>デプロイ</td><td>Fly.io（無料プラン使用）</td></tr>
-      </tbody>
-    </table>
   </div>
 </body>
 </html>
