@@ -5,7 +5,6 @@
 **Museum** は、美術館・展覧会に関する情報を管理・共有できるレビュー型Webアプリケーションです。  
 全国の美術館に対する訪問履歴や感想を記録し、他のユーザーと共有できる仕組みを備えています。
 
-このアプリは、**初めてのエンジニア転職を目的としたポートフォリオ**として開発しました。
 
 ### 主な機能
 
@@ -50,6 +49,20 @@ graph TD
 ## 公開デモ
 
 🔗 https://museum.fly.dev/
+
+---
+
+## 🔗 公開URLまとめ
+
+- 🔍 GitHub Pages 紹介ページ  
+  https://umatoma113.github.io/museum/
+
+- 🚀 本番アプリ（Laravel + Fly.io）  
+  https://museum-app.fly.dev
+
+- 💻 ソースコード（GitHub）  
+  https://github.com/umatoma113/museum
+
 
 ---
 
